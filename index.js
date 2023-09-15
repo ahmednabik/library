@@ -40,7 +40,7 @@ function displayBooks() {
             <div><span><strong>Pages</strong> </span><p id="pages">${book.pages}</p></div>
             <div><span><strong>Status</strong> </span><p id="status">${book.status}</p></div>
             <div><span><strong>Genre</strong> </span><p id="genre">${book.genre}</p></div>
-            // <div style="display:none"><span><strong>Genre</strong> </span><p id="index">${book.index}</p></div>
+            <div style="display:none"><span><strong>Genre</strong> </span><p id="index">${book.index}</p></div>
         </div>
         <div> <button onClick="removeBook(event)" data-index=${book.index} class="delete-book">X</button></div>
     </div>
@@ -83,3 +83,4 @@ function removeBook(event) {
 // currently the data-index is hardcoded and when lower index items are deleted,
 //the array length reduces below the remaining index items and the removeBook functions fail to execute.
 //Need to find a way to update the data-index dynamically after each removeBook execution
+//i am in the refactored branch now
