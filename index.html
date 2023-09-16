@@ -4,76 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inknut Antiqua">
     <script src="index.js" defer></script>
     <title>My Library</title>
 </head>
 
-<body class="flex gap-3 justify-center items-center h-screen">
-    <section id="card-section" class="bg-green-300 w-3/4 grid grid-cols-3 gap-4 p-10"></section>
-    <section>
-        <form action="" method="post" class="space-y-4" enctype="multipart/form-data">
-
-            <!-- Title -->
-            <div>
-                <label for="title" class="block text-sm font-medium text-gray-600">Title:</label>
-                <input type="text" id="title-input" name="title" required class="mt-1 p-2 w-full rounded-md border">
-            </div>
-
-            <!-- Author -->
-            <div>
-                <label for="author" class="block text-sm font-medium text-gray-600">Author:</label>
-                <input type="text" id="author-input" name="author" required class="mt-1 p-2 w-full rounded-md border">
-            </div>
-
-            <!-- Description -->
-            <div>
-                <label for="description" class="block text-sm font-medium text-gray-600">Description:</label>
-                <textarea id="description-input" name="description" rows="4" required
-                    class="mt-1 p-2 w-full rounded-md border"></textarea>
-            </div>
-
-            <!-- Pages -->
-            <div>
-                <label for="pages" class="block text-sm font-medium text-gray-600">Pages:</label>
-                <input type="number" id="pages-input" name="pages" min="1" required
-                    class="mt-1 p-2 w-full rounded-md border">
-            </div>
-
-            <!-- Genre -->
-            <div>
-                <label for="genre" class="block text-sm font-medium text-gray-600">Genre:</label>
-                <select id="genre-input" name="genre" class="mt-1 p-2 w-full rounded-md border">
-                    <option value="fiction">Fiction</option>
-                    <option value="non-fiction">Non-Fiction</option>
-                    <option value="mystery">Mystery</option>
-                    <option value="fantasy">Fantasy</option>
-                </select>
-            </div>
-
-            <!-- Status -->
-            <div>
-                <label for="status" class="block text-sm font-medium text-gray-600">Status:</label>
-                <select id="status-input" name="status" class="mt-1 p-2 w-full rounded-md border">
-                    <option value="read">Read</option>
-                    <option value="reading">Reading</option>
-                    <option value="want-to-read">Want to Read</option>
-                </select>
-            </div>
-
-            <!-- Submit Button -->
-            <div>
-                <input id="add-book" type="submit" value="Add New Book"
-                    class="cursor-pointer w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
-            </div>
-        </form>
-        <button id="clear-library" class="mt-4 w-full bg-slate-400 text-white p-2 rounded-md hover:bg-slate-600">Clear
-            Library</button>
-
-
-    </section>
-
+<body>
+    <header>
+        <div class="logo"><img src="imgs/logo1.png" alt="logo" width="80px"></div>
+        <nav>
+            <div class="nav-item">Home</div>
+            <div class="nav-item">My Library</div>
+            <div class="nav-item">Log in</div>
+        </nav>
+    </header>
+    <main>
+        <div id="book-shelf" class="book-shelf"></div>
+        <div> <button class="add-book" id="add-book"><img src="/imgs/addbook.svg" width="30px" alt=""></button> </div>
+        <div> <button class="clear-library" id="clear-library"><img src="/imgs/addbook.svg" width="30px"
+                    alt=""></button> </div>
+    </main>
+    <footer>
+        <span>created by: ahmed n. khan</span>
+        <span>all rights reserved @ 2023</span>
+    </footer>
 </body>
+
+<dialog class="add-book-modal" id="add-book-modal">
+    <form>
+        <div>
+            <form id="book-form">
+                <!-- Book Title -->
+                <label for="title-input">Book Title:</label>
+                <input type="text" id="title-input" name="title" required>
+
+                <!-- Author Name -->
+                <label for="author-input">Author Name:</label>
+                <input type="text" id="author-input" name="author" required>
+
+                <!-- Genre -->
+                <label for="genre-input">Genre:</label>
+                <input type="text" id="genre-input" name="genre" required>
+
+                <!-- Description -->
+                <label for="description-input">Description:</label>
+                <textarea id="description-input" name="description" rows="4" required></textarea>
+
+                <!-- Pages -->
+                <label for="pages-input">Pages:</label>
+                <input type="number" id="pages-input" name="pages" required>
+
+                <!-- Status (read/no read) -->
+                <label for="status-input">Status:</label>
+                <select id="status-input" name="status" required>
+                    <option value="read">Read</option>
+                    <option value="no-read">No Read</option>
+                </select>
+
+                <!-- Submit button (optional) -->
+                <input type="submit" value="Submit">
+                <button type="button" id="cancel-button">Cancel</button>
+            </form>
+        </div>
+    </form>
+</dialog>
 
 </html>
