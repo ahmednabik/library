@@ -21,9 +21,11 @@
     </header>
     <main>
         <div id="book-shelf" class="book-shelf"></div>
-        <div> <button class="add-book" id="add-book"><img src="/imgs/addbook.svg" width="30px" alt=""></button> </div>
-        <div> <button class="clear-library" id="clear-library"><img src="/imgs/addbook.svg" width="30px"
-                    alt=""></button> </div>
+        <div> <button class="add-book" id="add-book"><img src="/imgs/addbook.svg" width="30px" alt=""><span
+                    class="tooltiptext">Add New Book</span></button>
+        </div>
+        <div> <button class="clear-library" id="clear-library"><img src="/imgs/dustbin.svg" width="30px" alt=""><span
+                    class="tooltiptext">Delete Library</span></button> </div>
     </main>
     <footer>
         <span>created by: ahmed n. khan</span>
@@ -32,42 +34,48 @@
 </body>
 
 <dialog class="add-book-modal" id="add-book-modal">
-    <form>
-        <div>
-            <form id="book-form">
-                <!-- Book Title -->
-                <label for="title-input">Book Title:</label>
-                <input type="text" id="title-input" name="title" required>
+    <form id="book-form">
+        <!-- Book Title -->
 
-                <!-- Author Name -->
-                <label for="author-input">Author Name:</label>
-                <input type="text" id="author-input" name="author" required>
+        <label for="title-input">Book Title:</label>
+        <input type="text" id="title-input" name="title" required>
 
-                <!-- Genre -->
-                <label for="genre-input">Genre:</label>
-                <input type="text" id="genre-input" name="genre" required>
+        <!-- Author Name -->
 
-                <!-- Description -->
-                <label for="description-input">Description:</label>
-                <textarea id="description-input" name="description" rows="4" required></textarea>
+        <label for="author-input">Author Name:</label>
+        <input type="text" id="author-input" name="author" required>
 
-                <!-- Pages -->
-                <label for="pages-input">Pages:</label>
-                <input type="number" id="pages-input" name="pages" required>
 
-                <!-- Status (read/no read) -->
-                <label for="status-input">Status:</label>
-                <select id="status-input" name="status" required>
-                    <option value="read">Read</option>
-                    <option value="no-read">No Read</option>
-                </select>
+        <!-- Genre -->
 
-                <!-- Submit button (optional) -->
-                <input type="submit" value="Submit">
-                <button type="button" id="cancel-button">Cancel</button>
-            </form>
-        </div>
+        <label for="genre-input">Genre:</label>
+        <input type="text" id="genre-input" name="genre" required>
+
+
+        <!-- Description -->
+
+        <label for="description-input">Description:</label>
+        <textarea id="description-input" name="description" rows="4" required></textarea>
+
+
+        <!-- Pages -->
+
+        <label for="pages-input">Pages:</label>
+        <input type="number" id="pages-input" name="pages" required>
+
+
+        <!-- Status (read/no read) -->
+        <label for="status-input">Status:</label>
+        <select id="status-input" name="status" required>
+            <option value="false">Not Read</option>
+            <option value="true">Read</option>
+        </select>
+
+        <!-- Submit button -->
+        <input class="btn-large add" type="submit" value="Submit">
+        <button class="btn-large cancel" type="button" id="cancel-button">Cancel</button>
     </form>
 </dialog>
+
 
 </html>

@@ -24,11 +24,9 @@ storedItems = localStorage.getItem("lib");
 
 if (storedItems) {
   library = JSON.parse(storedItems);
-  librarySize = library.length;
   displayBooks();
 } else {
   library = [];
-  librarySize = 0;
   document.getElementById(
     "book-shelf"
   ).innerHTML = `<div style="padding-top:50px">No books found.</div>`;
@@ -41,9 +39,11 @@ function displayBooks() {
   bookCard.innerHTML = library
     .map((book) => {
       return `
-            <div class="card">
+            <div id="card" class="card">
                 <div class="cover">
-                    <div style="background-image: url(${book.cover});" class="cover-image"></div>
+                    <div style="background-image: url(${
+                      book.cover
+                    });" class="cover-image"></div>
                 </div>
                 <div class="info">
                     <p class="title">${book.title}</p>
@@ -54,14 +54,31 @@ function displayBooks() {
                         </p>
                     </div>
                     <p class="genre"><strong>Genre:</strong> ${book.genre}</p>
-                    <p class="page-numbers"><strong>Pages:</strong> ${book.pages}</p>
-                    <button class="btn remove">Remove</button>
-                    <button class="btn mark">Mark Read</button>
+                    <p class="page-numbers"><strong>Pages:</strong> ${
+                      book.pages
+                    }</p>
+                    <button id="remove" class="btn remove">Remove</button>
+                    <button id="mark" class="btn mark">${
+                      book.status ? "✓ Read" : "Mark Read"
+                    }</button>
                 </div>
             </div>
       `;
     })
     .join("");
+  const readStatusBtn = document.querySelectorAll(".mark");
+  if (readStatusBtn) {
+    readStatusBtn.forEach((btn) => {
+      btn.addEventListener("click", changeReadStatus);
+    });
+  }
+
+  const removeBtn = document.querySelectorAll(".remove");
+  if (removeBtn) {
+    removeBtn.forEach((btn) => {
+      btn.addEventListener("click", removeBook);
+    });
+  }
 }
 
 function addBook(event) {
@@ -73,29 +90,38 @@ function addBook(event) {
     description: document.getElementById("description-input").value,
     genre: document.getElementById("genre-input").value,
     pages: document.getElementById("pages-input").value,
-    status: document.getElementById("status-input").value,
-    index: librarySize,
+    status: document.getElementById("status-input").value === "true",
   };
 
   library.push(newBook);
-  librarySize += 1;
   localStorage.setItem("lib", JSON.stringify(library));
+  addBookModal.close();
   displayBooks();
+}
+
+function removeBook(event) {
+  const parentCard = event.target.closest(".card");
+  if (parentCard) {
+    const title = parentCard.querySelector(".title").textContent;
+    const index = library.findIndex((book) => book.title === title);
+    library.splice(index, 1); //remove book and update library array
+  }
+  localStorage.setItem("lib", JSON.stringify(library)); //update local storage
+  displayBooks(); //force re-render
+}
+
+function changeReadStatus(e) {
+  const parentCard = e.target.closest(".card");
+  if (parentCard) {
+    const title = parentCard.querySelector(".title").textContent;
+    const index = library.findIndex((book) => book.title === title);
+    library[index].status = !library[index].status; //toggle status
+    localStorage.setItem("lib", JSON.stringify(library)); //update local storage
+    displayBooks(); //force re-render
+  }
 }
 
 function clearLibrary() {
   localStorage.clear();
   bookCard.innerHTML = "<div>Library items cleared.</div>";
 }
-
-function removeBook(event) {
-  let itemIndex = event.target.getAttribute("data-index");
-  library.splice(itemIndex, 1);
-  localStorage.setItem("lib", JSON.stringify(library));
-  displayBooks();
-}
-
-// currently the data-index is hardcoded and when lower index items are deleted,
-//the array length reduces below the remaining index items and the removeBook functions fail to execute.
-//Need to find a way to update the data-index dynamically after each removeBook execution
-//i am in the refactored branch now
