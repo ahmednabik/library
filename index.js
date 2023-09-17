@@ -81,12 +81,16 @@ function displayBooks() {
   }
 }
 
-function addBook(event) {
+async function addBook(event) {
   event.preventDefault();
+
+  const title = document.getElementById("title-input").value;
+  const coverImageUrl = await getCoverImage(title);
+
   let newBook = {
-    title: document.getElementById("title-input").value,
+    title: title,
     author: document.getElementById("author-input").value,
-    cover: "/imgs/book.jpg",
+    cover: coverImageUrl,
     description: document.getElementById("description-input").value,
     genre: document.getElementById("genre-input").value,
     pages: document.getElementById("pages-input").value,
@@ -124,4 +128,25 @@ function changeReadStatus(e) {
 function clearLibrary() {
   localStorage.clear();
   bookCard.innerHTML = "<div>Library items cleared.</div>";
+}
+
+function getCoverImage(title) {
+  return fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (
+        data.items &&
+        data.items.length > 0 &&
+        data.items[0].volumeInfo &&
+        data.items[0].volumeInfo.imageLinks
+      ) {
+        return data.items[0].volumeInfo.imageLinks.thumbnail;
+      } else {
+        throw new Error("Cover image not found");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching cover image:", error);
+      return "./imgs/book.jpg";
+    });
 }
